@@ -12,7 +12,7 @@ func reset():
 
 
 func _input(_event):
-	if Input.is_action_just_pressed("quit"):
+	if Input.is_action_just_pressed("menu"):
 		get_tree().quit()
 
 

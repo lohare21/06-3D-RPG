@@ -43,7 +43,7 @@ func _physics_process(_delta):
 		get_tree().change_scene("res://UI/Game_Over.tscn")
 	if Global.timer < 0:
 		get_tree().change_scene("res://UI/Game_Over.tscn")
-	if get_node("/root/Game/Target_container").get_child_count() == 0 and get_node("/root/Game/Drone_container").get_child_count() == 0:
+	if get_node("/root/Game/Target_Container").get_child_count() == 0 and get_node("/root/Game/Drone_container").get_child_count() == 0:
 		get_tree().change_scene("res://UI/Win.tscn")
 
 func _input(event):
@@ -51,9 +51,6 @@ func _input(event):
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		Pivot.rotate_x(-event.relative.y * mouse_sensitivity)
 		Pivot.rotation_degrees.x = clamp(Pivot.rotation_degrees.x, -30, 15)
-
-
-
 
 func get_input():
 	var input_dir = Vector3()
