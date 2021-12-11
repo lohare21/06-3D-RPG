@@ -1,36 +1,70 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Terrain.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Target/Target.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/RayCast.gd" type="Script" id=5]
 
-[sub_resource type="CubeMesh" id=1]
-size = Vector3( 100, 0.5, 100 )
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 1, 0, 0, 1 )
+emission_enabled = true
+emission = Color( 1, 0, 0, 1 )
+emission_energy = 4.0
+emission_operator = 0
+emission_on_uv2 = false
 
-[sub_resource type="BoxShape" id=2]
-extents = Vector3( 50, 0.25, 50 )
+[sub_resource type="SphereMesh" id=2]
+material = SubResource( 1 )
+radius = 0.5
+height = 1.0
 
 [node name="Game" type="Spatial"]
-
-[node name="Ground" type="StaticBody" parent="."]
-visible = false
-
-[node name="MeshInstance" type="MeshInstance" parent="Ground"]
-mesh = SubResource( 1 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="Ground"]
-shape = SubResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, 0 )
 script = ExtResource( 2 )
 
-[node name="Piviot" type="Position3D" parent="Player"]
+[node name="Pivot" type="Position3D" parent="Player"]
 
-[node name="Camera" type="Camera" parent="Player/Piviot"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5, -8 )
+[node name="Camera" type="Camera" parent="Player/Pivot"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.87108, -8 )
 fov = 56.25
 
+[node name="RayCast" type="RayCast" parent="Player/Pivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, 100 )
+script = ExtResource( 5 )
+
+[node name="Reticule" type="Position3D" parent="Player/Pivot/RayCast"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Player/Pivot/RayCast"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 26.5871 )
+mesh = SubResource( 2 )
+material/0 = null
+
 [node name="lowpoly_scene" parent="." instance=ExtResource( 3 )]
-transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, -1.86837, -3.41967, -0.440737 )
+
+[node name="Target_Container" type="Spatial" parent="."]
+
+[node name="Target" parent="Target_Container" instance=ExtResource( 4 )]
+transform = Transform( 0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, -27, 4, 9 )
+
+[node name="Target2" parent="Target_Container" instance=ExtResource( 4 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 29.0322, 7.61927, -35.9669 )
+script = null
+
+[node name="Target3" parent="Target_Container" instance=ExtResource( 4 )]
+transform = Transform( 0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, -32.5377, 5.21976, -45.599 )
+script = null
+
+[node name="Target4" parent="Target_Container" instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.3443, 5.22918, -47.8921 )
+script = null
+
+[node name="Target5" parent="Target_Container" instance=ExtResource( 4 )]
+transform = Transform( -0.50037, 0.0140351, 0.865698, 0.0755419, 0.996763, 0.0275029, -0.86251, 0.0791581, -0.499811, 22.0425, 1.09582, 2.43576 )
+script = null
